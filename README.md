@@ -14,7 +14,7 @@
 ## 依赖
 * Gradle
 ```groovy
-compile 'com.yanzhenjie:statusview:1.0.0'
+compile 'com.yanzhenjie:statusview:1.0.1'
 ```
 
 * Maven
@@ -22,7 +22,7 @@ compile 'com.yanzhenjie:statusview:1.0.0'
 <dependency>
   <groupId>com.yanzhenjie</groupId>
   <artifactId>statusview</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <type>pom</type>
 </dependency>
 ```
