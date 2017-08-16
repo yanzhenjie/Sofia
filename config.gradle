@@ -19,9 +19,8 @@ ext {
             versionName        : "1.0.0",
     ]
 
-    maven = [
-            // library
-            version       : "1.0.0",
+    bintray = [
+            version       : "1.0.1",
 
             siteUrl       : 'https://github.com/yanzhenjie/StatusView',
             gitUrl        : 'git@github.com:yanzhenjie/StatusView.git',

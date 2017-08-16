@@ -80,14 +80,23 @@ public class StatusUtils {
     /**
      * Set the status bar to dark.
      */
-    public static void setStatusBarDarkFont(Activity activity, boolean darkFont) {
-        setMIUIStatusBarDarkFont(activity, darkFont);
-        setMeizuStatusBarDarkFont(activity, darkFont);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+    public static boolean setStatusBarDarkFont(Activity activity, boolean darkFont) {
+        boolean succeed = setMIUIStatusBarDarkFont(activity, darkFont);
+        if (!succeed)
+            succeed = setMeizuStatusBarDarkFont(activity, darkFont);
+        if (!succeed && darkFont && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Window window = activity.getWindow();
             View decorView = window.getDecorView();
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            succeed = true;
+        } else if (!succeed && !darkFont && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Window window = activity.getWindow();
+            View decorView = window.getDecorView();
+            int systemUIVisibility = decorView.getSystemUiVisibility();
+
+            decorView.setSystemUiVisibility(systemUIVisibility & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
         }
+        return succeed;
     }
 
     private static boolean setMeizuStatusBarDarkFont(Activity activity, boolean darkFont) {

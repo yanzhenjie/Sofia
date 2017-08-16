@@ -15,4 +15,4 @@ android {
     }
 }
 
-apply from: 'https://github.com/yanzhenjie/bintray/blob/master/bintray.gradle?raw=true'
+apply from: 'https://github.com/yanzhenjie/bintray/blob/master/maven.gradle?raw=true'
