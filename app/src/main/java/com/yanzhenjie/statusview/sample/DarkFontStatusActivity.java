@@ -15,6 +15,7 @@
  */
 package com.yanzhenjie.statusview.sample;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -34,7 +35,9 @@ public class DarkFontStatusActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dark_font);
-        StatusUtils.setStatusBarDarkFont(this, true); // Dark font for StatusBar.
+        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
+            StatusUtils.setStatusBarColor(this, Color.BLACK);
+        }
         StatusUtils.setLayoutFullScreen(this);  // Layout full screen.
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
