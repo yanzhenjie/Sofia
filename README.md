@@ -110,12 +110,13 @@ mStatusView.getBackground().mutate().setAlpha(0~255); // 透明度值是[0, 255]
 StatusUtils.setStatusBarDarkFont(this, true); // Dark font for StatusBar.
 ```
 
-因为`Android`在6.0以前，状态栏字体都是白色。在6.0以后可以修改状态栏字体为深色字体了，但是还是不能指定具体改为什么颜色，所以建议在6.0以前不要使用白色状态栏，开发者可以在`BaseActivity`中加入如下代码：
+因为仅仅在在6.0以后可以修改状态栏字体为深色字体，部分小米和魅族在6.0以下也支持修改状态栏字体为深色，所以这里要判断下：
 ```
-if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+if(StatusUtils.setStatusBarDarkFont(this, true)) {
+	// 成功设置深色字体后再设置状态栏为白色。
     StatusUtils.setStatusBarColor(this, Color.WHITE);
-    StatusUtils.setStatusBarDarkFont(this, true); // Dark font for StatusBar.
 } else {
+	// 如果没成功设置为深色字体，那么状态栏用灰色或者黑色（可以理解为原生色）。
     StatusUtils.setStatusBarColor(this, Color.GRAY);
 }
 ```
