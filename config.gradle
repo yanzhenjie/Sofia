@@ -53,6 +53,6 @@ ext {
             appCompat   : 'com.android.support:appcompat-v7:25.3.1',
             recyclerView: 'com.yanzhenjie:recyclerview-swipe:1.1.1',
 
-            statusView  : 'com.yanzhenjie:statusview:1.0.0'
+            statusView  : 'com.yanzhenjie:statusview:1.0.1'
     ]
 }
