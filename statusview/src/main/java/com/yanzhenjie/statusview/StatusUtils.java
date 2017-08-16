@@ -93,8 +93,8 @@ public class StatusUtils {
             Window window = activity.getWindow();
             View decorView = window.getDecorView();
             int systemUIVisibility = decorView.getSystemUiVisibility();
-
             decorView.setSystemUiVisibility(systemUIVisibility & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            succeed = true;
         }
         return succeed;
     }
