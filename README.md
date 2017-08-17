@@ -114,10 +114,10 @@ StatusUtils.setStatusBarDarkFont(this, true); // Dark font for StatusBar.
 ```
 if(StatusUtils.setStatusBarDarkFont(this, true)) {
 	// 成功设置深色字体后再设置状态栏为白色。
-    StatusUtils.setStatusBarColor(this, Color.WHITE);
+    mStatusView.setBackgroundColor(Color.WHITE);
 } else {
 	// 如果没成功设置为深色字体，那么状态栏用灰色或者黑色（可以理解为原生色）。
-    StatusUtils.setStatusBarColor(this, Color.GRAY);
+    mStatusView.setBackgroundColor(Color.BLACK);
 }
 ```
 

@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.yanzhenjie.statusview.StatusUtils;
+import com.yanzhenjie.statusview.StatusView;
 
 /**
  * <p>
@@ -31,12 +32,17 @@ import com.yanzhenjie.statusview.StatusUtils;
  */
 public class DarkFontStatusActivity extends AppCompatActivity {
 
+    StatusView mStatusView;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dark_font);
+
+        mStatusView = (StatusView) findViewById(R.id.status_view);
+
         if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            StatusUtils.setStatusBarColor(this, Color.BLACK);
+            mStatusView.setBackgroundColor(Color.BLACK);
         }
         StatusUtils.setLayoutFullScreen(this);  // Layout full screen.
 
