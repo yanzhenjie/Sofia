@@ -14,7 +14,7 @@
 ## 依赖
 * Gradle
 ```groovy
-compile 'com.yanzhenjie:statusview:1.0.1'
+compile 'com.yanzhenjie:statusview:1.0.3'
 ```
 
 * Maven
@@ -22,18 +22,20 @@ compile 'com.yanzhenjie:statusview:1.0.1'
 <dependency>
   <groupId>com.yanzhenjie</groupId>
   <artifactId>statusview</artifactId>
-  <version>1.0.1</version>
+  <version>1.0.3</version>
   <type>pom</type>
 </dependency>
 ```
 
 ## 类和方法介绍
-1. `StatusView`：用来替代系统的Status，开发者只需要控制它的`background`属性即可，其它都会自动处。
-2. `StatusUtils`：用来设置`Activity`的状态栏和导航栏，这个类的方法要着重说明。
+1. `StatusView`：用来替代系统的Status，开发者只需要把它布局在Layout的最顶部，控制它的`background`属性即可，其它都会自动处理。
+2. `NavigationView`：用来替代系统的虚拟Navigationi，开发者只需要把它布局在Layout的最底部，控制它的`backgroud`属性即可，其它都会自动处理。
+3. `StatusUtils`：用来设置`Activity`的状态栏和导航栏，这个类的方法要着重说明。
 - `setStatusBarColor`：设置状态栏颜色。
 - `setNavigationBarColor`：设置导航栏颜色。 
 - `setSystemBarColor`：同时设置状态栏、导航栏颜色，每个颜色可以单独指定。
-- `setLayoutFullScreen`：设置`Activity`的`ContentView`占满全屏，并让`StatusBar`透明，内容侵入状态栏下层。
+- `setFullToStatusBar`：设置`Activity`的`ContentView`侵入到状态栏，并让状态栏透明，但是不会隐藏状态栏。
+- `setFullToNavigationBar`：设置`Activity`的`ContentView`侵入到虚拟导航栏，并让导航栏透明，但是不会隐藏导航栏。
  - `setStatusBarDarkFont`：设置状态栏的字体为深色，一般用于当`Toolbar`和状态栏为浅色时（比如白色状态栏）。
 
 ## 图一效果实现
@@ -59,10 +61,10 @@ compile 'com.yanzhenjie:statusview:1.0.1'
 
 布局伪代码如上所示，`app:fitsView="@id/root_layout"`这个属性必须要指定，并且只能通过`xml`布局指定，它的作用是适配`Android5.0`以下时避免霸占了状态栏，但是不能修改状态栏颜色的问题。
 
-接着在`Activity#onCreate()`中调用`setLayoutFullScreen`：
+接着在`Activity#onCreate()`中调用`setFullToStatusBar`：
 ```
 setContentView(...);
-StatusUtils.setLayoutFullScreen(this); // Layout full screen.
+StatusUtils.setFullToStatusBar(this); // StatusBar.
 ```
 
 接下来随意修改状态栏颜色：
@@ -93,10 +95,10 @@ mStatusView.setBackgroundColor(Color.BLUE);
 </FrameLayout>
 ```
 
-接着在`Activity#onCreate()`中调用`setLayoutFullScreen`：
+接着在`Activity#onCreate()`中调用`setFullToStatusBar`：
 ```
 setContentView(...);
-StatusUtils.setLayoutFullScreen(this); // Layout full screen.
+StatusUtils.setFullToStatusBar(this); // Layout full screen.
 ```
 
 接下来随意修改状态栏的透明度：
@@ -120,6 +122,9 @@ if(StatusUtils.setStatusBarDarkFont(this, true)) {
     mStatusView.setBackgroundColor(Color.BLACK);
 }
 ```
+
+## 虚拟导航栏用法
+用法和`StatusView`相同，开发者只需要把它布局在Layout的最底部然后控制它的`background`属性即可，这里不再例举，请查看Sample。
 
 # License
 ```text
