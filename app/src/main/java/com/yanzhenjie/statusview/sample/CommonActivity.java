@@ -24,6 +24,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.yanzhenjie.statusview.NavigationView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -39,6 +40,7 @@ public class CommonActivity extends AppCompatActivity {
 
     StatusView mStatusView;
     Toolbar mToolbar;
+    NavigationView mNavigationView;
 
     View mHeaderView;
 
@@ -52,6 +54,7 @@ public class CommonActivity extends AppCompatActivity {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mStatusView = (StatusView) findViewById(R.id.status_view);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
@@ -67,6 +70,7 @@ public class CommonActivity extends AppCompatActivity {
                 float fraction = (float) scrollDistance / (float) headerHeight;
 
                 setToolbarStatusBarAlpha(evaluate(fraction, startColor, endColor));
+                setNavigationViewColor(evaluate(fraction, endColor, startColor));
             }
         });
     }
@@ -74,6 +78,10 @@ public class CommonActivity extends AppCompatActivity {
     private void setToolbarStatusBarAlpha(int color) {
         DrawableCompat.setTint(mToolbar.getBackground().mutate(), color);
         DrawableCompat.setTint(mStatusView.getBackground().mutate(), color);
+    }
+
+    private void setNavigationViewColor(int color) {
+        DrawableCompat.setTint(mNavigationView.getBackground().mutate(), color);
     }
 
     public int evaluate(float fraction, int startValue, int endValue) {
