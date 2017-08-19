@@ -65,15 +65,36 @@ public class StatusUtils {
     }
 
     /**
-     * Set the content layout full the screen, but do not hide StatusBar.
+     * Set the content layout full the StatusBar, but do not hide StatusBar.
+     *
+     * @deprecated use {@link #setFullToStatusBar(Activity)} instead.
      */
+    @Deprecated
     public static void setLayoutFullScreen(Activity activity) {
+        setFullToStatusBar(activity);
+    }
+
+    /**
+     * Set the content layout full the StatusBar, but do not hide StatusBar.
+     */
+    public static void setFullToStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             View decorView = window.getDecorView();
             decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
             window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
             window.setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    /**
+     * Set the content layout full the NavigationBar, but do not hide NavigationBar.
+     */
+    public static void setFullToNavigationBar(Activity activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = activity.getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.setNavigationBarColor(Color.TRANSPARENT);
         }
     }
 

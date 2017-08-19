@@ -15,12 +15,12 @@ ext {
             sampleMinSdkVersion: 14,
             targetSdkVersion   : 25,
 
-            versionCode        : 1,
-            versionName        : "1.0.0",
+            versionCode        : 3,
+            versionName        : "1.0.3",
     ]
 
     bintray = [
-            version       : "1.0.1",
+            version       : "1.0.2",
 
             siteUrl       : 'https://github.com/yanzhenjie/StatusView',
             gitUrl        : 'git@github.com:yanzhenjie/StatusView.git',
@@ -53,6 +53,6 @@ ext {
             appCompat   : 'com.android.support:appcompat-v7:25.3.1',
             recyclerView: 'com.yanzhenjie:recyclerview-swipe:1.1.1',
 
-            statusView  : 'com.yanzhenjie:statusview:1.0.1'
+            statusView  : 'com.yanzhenjie:statusview:1.0.2'
     ]
 }
