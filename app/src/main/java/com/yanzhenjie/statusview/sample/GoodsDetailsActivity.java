@@ -22,6 +22,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.yanzhenjie.statusview.NavigationView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
 
@@ -37,6 +38,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
 
     StatusView mStatusView;
     Toolbar mToolbar;
+    NavigationView mNavigationView;
 
     View mHeaderView;
 
@@ -44,11 +46,13 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_details);
-        StatusUtils.setLayoutFullScreen(this);  // Layout full screen.
+        StatusUtils.setFullToStatusBar(this);  // StatusBar.
+        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         mStatusView = (StatusView) findViewById(R.id.status_view);
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
@@ -58,17 +62,17 @@ public class GoodsDetailsActivity extends AppCompatActivity {
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 int headerHeight = mHeaderView.getHeight();
                 int scrollDistance = Math.min(scrollY, headerHeight);
-                int alpha = (int) ((float) scrollDistance / (float) headerHeight * 255F);
-
-                setToolbarStatusBarAlpha(alpha);
+                int statusAlpha = (int) ((float) scrollDistance / (float) headerHeight * 255F);
+                setAnyBarAlpha(statusAlpha);
             }
         });
-        setToolbarStatusBarAlpha(0);
+        setAnyBarAlpha(0);
     }
 
-    private void setToolbarStatusBarAlpha(int alpha) {
+    private void setAnyBarAlpha(int alpha) {
         mToolbar.getBackground().mutate().setAlpha(alpha);
         mStatusView.getBackground().mutate().setAlpha(alpha);
+        mNavigationView.getBackground().mutate().setAlpha(255 - alpha);
     }
 
 }

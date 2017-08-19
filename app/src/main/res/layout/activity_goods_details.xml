@@ -15,9 +15,9 @@
     limitations under the License.
 -->
 <FrameLayout
-    android:id="@+id/root_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -46,10 +46,10 @@
 
         <com.yanzhenjie.statusview.StatusView
             android:id="@+id/status_view"
-            app:fitsView="@id/root_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"/>
+            android:background="?attr/colorPrimary"
+            app:fitsView="@id/root_layout"/>
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -61,5 +61,12 @@
             app:titleTextColor="@color/white"/>
 
     </LinearLayout>
+
+    <com.yanzhenjie.statusview.NavigationView
+        android:id="@+id/navigation_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="?attr/colorPrimary"/>
 
 </FrameLayout>

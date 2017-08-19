@@ -44,7 +44,8 @@ public class DarkFontStatusActivity extends AppCompatActivity {
         if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
             mStatusView.setBackgroundColor(Color.BLACK);
         }
-        StatusUtils.setLayoutFullScreen(this);  // Layout full screen.
+        StatusUtils.setFullToStatusBar(this);  // StatusBar.
+        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

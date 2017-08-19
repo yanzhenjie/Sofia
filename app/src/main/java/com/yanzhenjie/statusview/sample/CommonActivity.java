@@ -46,7 +46,8 @@ public class CommonActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common);
-        StatusUtils.setLayoutFullScreen(this); // Layout full screen.
+        StatusUtils.setFullToStatusBar(this);  // StatusBar.
+        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
