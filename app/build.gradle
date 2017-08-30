@@ -26,5 +26,4 @@ dependencies {
 
 //    compile rootProject.ext.dependencies.statusView
     compile project(":statusview")
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 }
