@@ -76,6 +76,9 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(new Intent(MainActivity.this, DarkFontStatusActivity.class));
                     break;
                 }
+                case 3:
+                    startActivity(new Intent(MainActivity.this, NormalActivity.class));
+                    break;
             }
         }
     };

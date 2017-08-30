@@ -13,6 +13,10 @@ android {
             targetCompatibility JavaVersion.VERSION_1_7
         }
     }
+
+    dependencies {
+        compile rootProject.ext.dependencies.appCompat
+    }
 }
 
 apply from: 'https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true'
