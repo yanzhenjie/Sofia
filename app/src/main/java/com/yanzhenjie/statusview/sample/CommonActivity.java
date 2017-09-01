@@ -27,6 +27,7 @@ import android.view.View;
 import com.yanzhenjie.statusview.NavigationView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+import com.yanzhenjie.statusview.SystemBarHelper;
 
 /**
  * <p>
@@ -37,24 +38,23 @@ import com.yanzhenjie.statusview.StatusView;
 public class CommonActivity extends AppCompatActivity {
 
     NestedScrollView mNestedScrollView;
-
-    StatusView mStatusView;
     Toolbar mToolbar;
-    NavigationView mNavigationView;
-
     View mHeaderView;
+    SystemBarHelper mSystemBarHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common);
-        StatusUtils.setFullToStatusBar(this);  // StatusBar.
-        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
+        mSystemBarHelper = new SystemBarHelper.Builder()
+                .enableFullToStatusBar()
+                .enableFullToNavigationBar()
+                .statusBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .navigationBarDrawable(ContextCompat.getDrawable(this, R.drawable.navigation))
+                .into(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mStatusView = (StatusView) findViewById(R.id.status_view);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
@@ -77,11 +77,11 @@ public class CommonActivity extends AppCompatActivity {
 
     private void setToolbarStatusBarAlpha(int color) {
         DrawableCompat.setTint(mToolbar.getBackground().mutate(), color);
-        DrawableCompat.setTint(mStatusView.getBackground().mutate(), color);
+        mSystemBarHelper.setStatusBarColor(color);
     }
 
     private void setNavigationViewColor(int color) {
-        DrawableCompat.setTint(mNavigationView.getBackground().mutate(), color);
+        mSystemBarHelper.setNavigationBarColor(color);
     }
 
     public int evaluate(float fraction, int startValue, int endValue) {

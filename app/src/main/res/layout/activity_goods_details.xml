@@ -44,13 +44,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.yanzhenjie.statusview.StatusView
-            android:id="@+id/status_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            app:fitsView="@id/root_layout"/>
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -61,12 +54,4 @@
             app:titleTextColor="@color/white"/>
 
     </LinearLayout>
-
-    <com.yanzhenjie.statusview.NavigationView
-        android:id="@+id/navigation_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="@drawable/navigation"/>
-
 </FrameLayout>

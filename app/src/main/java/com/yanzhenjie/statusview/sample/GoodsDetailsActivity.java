@@ -17,6 +17,7 @@ package com.yanzhenjie.statusview.sample;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -25,6 +26,7 @@ import android.view.View;
 import com.yanzhenjie.statusview.NavigationView;
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+import com.yanzhenjie.statusview.SystemBarHelper;
 
 /**
  * <p>
@@ -35,24 +37,26 @@ import com.yanzhenjie.statusview.StatusView;
 public class GoodsDetailsActivity extends AppCompatActivity {
 
     NestedScrollView mNestedScrollView;
-
-    StatusView mStatusView;
     Toolbar mToolbar;
-    NavigationView mNavigationView;
-
     View mHeaderView;
+    SystemBarHelper mSystemBarHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_details);
-        StatusUtils.setFullToStatusBar(this);  // StatusBar.
-        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
+
+        mSystemBarHelper = new SystemBarHelper.Builder()
+                .enableFullToStatusBar()
+                .enableFullToNavigationBar()
+                .enableImmersedStatusBar(true)
+                .fitSystemWindow(R.id.toolbar)
+                .statusBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
+                .navigationBarDrawable(ContextCompat.getDrawable(this, R.drawable.navigation))
+                .into(this);
 
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
-        mStatusView = (StatusView) findViewById(R.id.status_view);
-        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
 
         mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
@@ -70,9 +74,10 @@ public class GoodsDetailsActivity extends AppCompatActivity {
     }
 
     private void setAnyBarAlpha(int alpha) {
+        mSystemBarHelper.enableImmersedNavigationBar(alpha > 0);
         mToolbar.getBackground().mutate().setAlpha(alpha);
-        mStatusView.getBackground().mutate().setAlpha(alpha);
-        mNavigationView.getBackground().mutate().setAlpha(255 - alpha);
+        mSystemBarHelper.setStatusBarAlpha(alpha);
+        mSystemBarHelper.setNavigationBarAlpha(255 - alpha);
     }
 
 }
