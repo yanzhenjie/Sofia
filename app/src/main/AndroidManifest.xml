@@ -15,7 +15,7 @@
     limitations under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.yanzhenjie.statusview.sample">
+    package="com.yanzhenjie.statusview.sample">
 
     <application
         android:allowBackup="true"
@@ -34,21 +34,20 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
         <activity
             android:name=".CommonActivity"
             android:label="@string/activity_title_common"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity
             android:name=".GoodsDetailsActivity"
             android:label="@string/activity_title_invasion"
             android:theme="@style/AppTheme.NoActionBar"/>
-
         <activity
             android:name=".DarkFontStatusActivity"
             android:label="@string/activity_title_dark"
             android:theme="@style/AppTheme.NoActionBar"/>
+
+        <activity android:name=".NormalActivity"></activity>
     </application>
 
 </manifest>

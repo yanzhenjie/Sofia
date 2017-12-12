@@ -29,12 +29,12 @@
         android:layout_alignParentTop="true"
         android:orientation="vertical">
 
-        <com.yanzhenjie.statusview.StatusView
+        <!--<com.yanzhenjie.statusview.StatusView
             android:id="@+id/status_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            app:fitsView="@id/root_layout"/>
+            app:fitsView="@id/root_layout"/>-->
 
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
@@ -47,18 +47,17 @@
 
     </LinearLayout>
 
-    <com.yanzhenjie.statusview.NavigationView
+    <!--<com.yanzhenjie.statusview.NavigationView
         android:id="@+id/navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="?attr/colorAccent"/>
+        android:background="?attr/colorAccent"/>-->
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nested_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navigation_view"
         android:layout_below="@id/header_layout">
 
         <LinearLayout

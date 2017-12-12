@@ -24,5 +24,6 @@ dependencies {
     compile rootProject.ext.dependencies.design
     compile rootProject.ext.dependencies.recyclerView
 
-    compile rootProject.ext.dependencies.statusView
+//    compile rootProject.ext.dependencies.statusView
+    compile project(":statusview")
 }

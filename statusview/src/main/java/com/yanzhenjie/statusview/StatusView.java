@@ -99,4 +99,8 @@ public class StatusView extends View {
             setVisibility(View.GONE);
         }
     }
+
+    int getStatusBarHeight(){
+        return statusBarHeight;
+    }
 }

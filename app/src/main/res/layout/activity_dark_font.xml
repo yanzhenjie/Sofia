@@ -27,13 +27,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.yanzhenjie.statusview.StatusView
-            android:id="@+id/status_view"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
-            app:fitsView="@id/root_layout"/>
-
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"

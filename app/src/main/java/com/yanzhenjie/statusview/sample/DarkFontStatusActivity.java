@@ -18,11 +18,13 @@ package com.yanzhenjie.statusview.sample;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.yanzhenjie.statusview.StatusUtils;
 import com.yanzhenjie.statusview.StatusView;
+import com.yanzhenjie.statusview.SystemBarHelper;
 
 /**
  * <p>
@@ -32,20 +34,17 @@ import com.yanzhenjie.statusview.StatusView;
  */
 public class DarkFontStatusActivity extends AppCompatActivity {
 
-    StatusView mStatusView;
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dark_font);
-
-        mStatusView = (StatusView) findViewById(R.id.status_view);
-
-        if (!StatusUtils.setStatusBarDarkFont(this, true)) {// Dark font for StatusBar.
-            mStatusView.setBackgroundColor(Color.BLACK);
-        }
-        StatusUtils.setFullToStatusBar(this);  // StatusBar.
-        StatusUtils.setFullToNavigationBar(this); // NavigationBar.
+        new SystemBarHelper.Builder()
+                .enableFullToStatusBar()
+                .enableFullToNavigationBar()
+                .enableImmersedNavigationBar(true)
+                .enableStatusBarDarkFont()
+                .statusBarColor(ContextCompat.getColor(this, R.color.white))
+                .into(this);
 
         Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
