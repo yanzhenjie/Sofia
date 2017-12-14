@@ -7,30 +7,29 @@ ext {
     ]
 
     android = [
-            applicationId      : "com.yanzhenjie.album.sample",
-            compileSdkVersion  : 25,
-            buildToolsVersion  : "25.0.3",
+            applicationId    : "com.yanzhenjie.sofia.sample",
+            compileSdkVersion: 26,
+            buildToolsVersion: "26.0.3",
 
-            libMinSdkVersion   : 9,
-            sampleMinSdkVersion: 14,
-            targetSdkVersion   : 25,
+            minSdkVersion    : 14,
+            targetSdkVersion : 25,
 
-            versionCode        : 3,
-            versionName        : "1.0.3",
+            versionCode      : 4,
+            versionName      : "1.0.4",
     ]
 
     bintray = [
-            version       : "1.0.3",
+            version       : "1.0.4",
 
-            siteUrl       : 'https://github.com/yanzhenjie/StatusView',
-            gitUrl        : 'git@github.com:yanzhenjie/StatusView.git',
+            siteUrl       : 'https://github.com/yanzhenjie/Sofia',
+            gitUrl        : 'git@github.com:yanzhenjie/Sofia.git',
 
             group         : "com.yanzhenjie",
 
             // project
             packaging     : 'aar',
-            name          : 'StatusView',
-            description   : 'StatusView for android',
+            name          : 'Sofia',
+            description   : 'Sofia for android',
 
             // project.license
             licenseName   : 'The Apache Software License, Version 2.0',
@@ -42,17 +41,17 @@ ext {
             developerEmail: 'smallajax@foxmail.com',
 
             // bintray
-            binrayLibrary : "StatusView",
+            binrayLibrary : "Sofia",
             bintrayRepo   : "maven",
             bintrayUser   : 'yolanda',
             bintrayLicense: "Apache-2.0"
     ]
 
     dependencies = [
-            design      : 'com.android.support:design:25.3.1',
-            appCompat   : 'com.android.support:appcompat-v7:25.3.1',
-            recyclerView: 'com.yanzhenjie:recyclerview-swipe:1.1.1',
+            design      : 'com.android.support:design:26.1.0',
+            appCompat   : 'com.android.support:appcompat-v7:26.1.0',
+            recyclerView: 'com.android.support:recyclerview-v7:26.1.0',
 
-            statusView  : 'com.yanzhenjie:statusview:1.0.3'
+            statusView  : 'com.yanzhenjie:sofia:1.0.4'
     ]
 }

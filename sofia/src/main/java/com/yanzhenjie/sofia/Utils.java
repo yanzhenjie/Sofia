@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yanzhenjie.statusview;
+package com.yanzhenjie.sofia;
 
 import android.app.Activity;
 import android.graphics.Color;
@@ -28,19 +28,7 @@ import java.lang.reflect.Method;
 /**
  * Created by YanZhenjie on 2017/6/27.
  */
-public class StatusUtils {
-
-    /**
-     * Set the system bar color.
-     */
-    public static void setSystemBarColor(Activity activity, int statusBarColor, int navigationBarColor) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Window window = activity.getWindow();
-            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-            window.setStatusBarColor(statusBarColor);
-            window.setNavigationBarColor(navigationBarColor);
-        }
-    }
+public class Utils {
 
     /**
      * Set the status bar color.
@@ -66,18 +54,8 @@ public class StatusUtils {
 
     /**
      * Set the content layout full the StatusBar, but do not hide StatusBar.
-     *
-     * @deprecated use {@link #setFullToStatusBar(Activity)} instead.
      */
-    @Deprecated
-    public static void setLayoutFullScreen(Activity activity) {
-        setFullToStatusBar(activity);
-    }
-
-    /**
-     * Set the content layout full the StatusBar, but do not hide StatusBar.
-     */
-    public static void setFullToStatusBar(Activity activity) {
+    public static void invasionStatusBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             View decorView = window.getDecorView();
@@ -92,7 +70,7 @@ public class StatusUtils {
     /**
      * Set the content layout full the NavigationBar, but do not hide NavigationBar.
      */
-    public static void setFullToNavigationBar(Activity activity) {
+    public static void invasionNavigationBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             Window window = activity.getWindow();
             View decorView = window.getDecorView();
@@ -105,26 +83,13 @@ public class StatusUtils {
     /**
      * Set the status bar to dark.
      */
-    public static boolean setStatusBarDarkFont(Activity activity, boolean darkFont) {
-        boolean succeed = setMIUIStatusBarDarkFont(activity, darkFont);
-        if (!succeed)
-            succeed = setMeizuStatusBarDarkFont(activity, darkFont);
-        if (!succeed && darkFont && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Window window = activity.getWindow();
-            View decorView = window.getDecorView();
-            decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            succeed = true;
-        } else if (!succeed && !darkFont && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            Window window = activity.getWindow();
-            View decorView = window.getDecorView();
-            int systemUIVisibility = decorView.getSystemUiVisibility();
-            decorView.setSystemUiVisibility(systemUIVisibility & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-            succeed = true;
-        }
-        return succeed;
+    public static void setStatusBarDarkFont(Activity activity, boolean darkFont) {
+        setMIUIStatusBarFont(activity, darkFont);
+        setMeizuStatusBarFont(activity, darkFont);
+        setDefaultStatusBarFont(activity, darkFont);
     }
 
-    private static boolean setMeizuStatusBarDarkFont(Activity activity, boolean darkFont) {
+    private static void setMeizuStatusBarFont(Activity activity, boolean darkFont) {
         try {
             WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
             Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
@@ -140,13 +105,11 @@ public class StatusUtils {
             }
             meizuFlags.setInt(lp, value);
             activity.getWindow().setAttributes(lp);
-            return true;
         } catch (Exception ignored) {
         }
-        return false;
     }
 
-    private static boolean setMIUIStatusBarDarkFont(Activity activity, boolean darkFont) {
+    private static void setMIUIStatusBarFont(Activity activity, boolean dark) {
         Window window = activity.getWindow();
         Class<?> clazz = window.getClass();
         try {
@@ -154,15 +117,25 @@ public class StatusUtils {
             Field field = layoutParams.getField("EXTRA_FLAG_STATUS_BAR_DARK_MODE");
             int darkModeFlag = field.getInt(layoutParams);
             Method extraFlagField = clazz.getMethod("setExtraFlags", int.class, int.class);
-            if (darkFont) {
+            if (dark) {
                 extraFlagField.invoke(window, darkModeFlag, darkModeFlag);
             } else {
                 extraFlagField.invoke(window, 0, darkModeFlag);
             }
-            return true;
         } catch (Exception ignored) {
         }
-        return false;
+    }
+
+    private static void setDefaultStatusBarFont(Activity activity, boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Window window = activity.getWindow();
+            View decorView = window.getDecorView();
+            if (dark) {
+                decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            } else {
+                decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+            }
+        }
     }
 
 }

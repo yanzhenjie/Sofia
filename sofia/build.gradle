@@ -5,7 +5,7 @@ android {
     buildToolsVersion rootProject.ext.android.buildToolsVersion
 
     defaultConfig {
-        minSdkVersion rootProject.ext.android.libMinSdkVersion
+        minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
 
         compileOptions {
@@ -14,9 +14,7 @@ android {
         }
     }
 
-    dependencies {
-        compile rootProject.ext.dependencies.appCompat
-    }
+    resourcePrefix 'sofia'
 }
 
-apply from: 'https://github.com/yanzhenjie/bintray/blob/master/maven-auto.gradle?raw=true'
+apply from: 'https://github.com/yanzhenjie/bintray/blob/master/maven.gradle?raw=true'

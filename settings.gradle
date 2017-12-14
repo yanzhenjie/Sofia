@@ -1,1 +1,1 @@
-include ':app', ':statusview'
+include ':app', ':sofia'
