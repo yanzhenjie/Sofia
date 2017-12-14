@@ -1,130 +1,88 @@
-﻿状态栏一体化，包括随着滑动渐变，透明状态栏，黑色字体的状态栏，兼容国产魅族、小米手机，其它手机使用标准模式。
+﻿SystemBar一体化，状态栏和导航栏均支持设置颜色、渐变色、图片、透明度、内容入侵。状态栏支持设置深色字体，以上特性兼容国产魅族、小米手机（包括7.0及以上）和其它标准模式的手机。
 
-我的主页：[http://www.yanzhenjie.com](http://www.yanzhenjie.com)  
-欢迎关注我的微博：[http://weibo.com/yanzhenjieit](http://weibo.com/yanzhenjieit)  
+**QQ技术交流群：[547839514](https://jq.qq.com/?_wv=1027&k=4Ev0ksp)**
 
-**QQ技术交流群：[547839514](https://jq.qq.com/?_wv=1027&k=4Ev0ksp)**  
+# 前言
+从`1.0.4`版本开始本项目改名为Sofia，由于原来的名字不太适合链式调用，于是我顺便换了一个相对优雅的名字：Sofia，译为中文大概可叫做：索菲亚。Sofia一词源自于希腊语∑οφία，含义为智慧，这也是我赋予这个项目的愿望。
 
 # 截图
-<image src="./image/1.gif" width="270">  <image src="./image/2.gif"  width="270">  <image src="./image/3.gif"  width="270">
+<image src="./image/1.gif" width="270">  <image src="./image/2.gif"  width="270">  <image src="./image/3.gif"  width="270">  
+<image src="./image/4.gif" width="270">  <image src="./image/5.gif"  width="270">  <image src="./image/6.gif"  width="270">  
 
-# 如何使用
-依赖本项目后，使用 `StatusView`和`StatusUtils`简单几行代码即可完成状态栏一体化。
+图一：状态栏和导航栏用图片作为背景。  
+图二：状态栏和导航栏随着Content的滑动逐渐变色。  
+图三：内容侵入状态栏，比如产品详情页。  
+图四：状态栏底色白色，字体深色（大概是灰黑色）。  
+图五：和DrawerLayout结合使用。  
+图六：和Fragment结合使用。  
 
+# 使用
 ## 依赖
 * Gradle
 ```groovy
-compile 'com.yanzhenjie:statusview:1.0.3'
+compile 'com.yanzhenjie:sofia:1.0.4'
 ```
 
 * Maven
 ```xml
 <dependency>
   <groupId>com.yanzhenjie</groupId>
-  <artifactId>statusview</artifactId>
+  <artifactId>sofia</artifactId>
   <version>1.0.3</version>
   <type>pom</type>
 </dependency>
 ```
 
-## 类和方法介绍
-1. `StatusView`：用来替代系统的Status，开发者只需要把它布局在Layout的最顶部，控制它的`background`属性即可，其它都会自动处理。
-2. `NavigationView`：用来替代系统的虚拟Navigationi，开发者只需要把它布局在Layout的最底部，控制它的`backgroud`属性即可，其它都会自动处理。
-3. `StatusUtils`：用来设置`Activity`的状态栏和导航栏，这个类的方法要着重说明。
-- `setStatusBarColor`：设置状态栏颜色。
-- `setNavigationBarColor`：设置导航栏颜色。 
-- `setSystemBarColor`：同时设置状态栏、导航栏颜色，每个颜色可以单独指定。
-- `setFullToStatusBar`：设置`Activity`的`ContentView`侵入到状态栏，并让状态栏透明，但是不会隐藏状态栏。
-- `setFullToNavigationBar`：设置`Activity`的`ContentView`侵入到虚拟导航栏，并让导航栏透明，但是不会隐藏导航栏。
- - `setStatusBarDarkFont`：设置状态栏的字体为深色，一般用于当`Toolbar`和状态栏为浅色时（比如白色状态栏）。
-
-## 图一效果实现
-`ContentView`的顶部的第一个`View`放`StatusView`，然后调用`setLayoutFullScreen`把`StatusView`顶到状态栏下层，接下来就可以控制状态栏颜色了。
-
-布局如下：
-```xml
-<LinearLayout android:id="@+id/root_layout">
-
-    <LinearLayout>
-        <com.yanzhenjie.statusview.StatusView
-            <!-- 宽高随便指定 -->
-            android:background="?attr/colorPrimary"
-            app:fitsView="@id/root_layout"/>
-
-        <android.support.v7.widget.Toolbar/>
-    </LinearLayout>
-
-    <.../>
-    
-</LinearLayout>
-```
-
-布局伪代码如上所示，`app:fitsView="@id/root_layout"`这个属性必须要指定，并且只能通过`xml`布局指定，它的作用是适配`Android5.0`以下时避免霸占了状态栏，但是不能修改状态栏颜色的问题。
-
-接着在`Activity#onCreate()`中调用`setFullToStatusBar`：
-```
-setContentView(...);
-StatusUtils.setFullToStatusBar(this); // StatusBar.
-```
-
-接下来随意修改状态栏颜色：
+## Api
+这里例如所有的Api，调用时结合具体的场景调用某几个方法即可，也可以一个都不调用，具体请参考Sample。  
+通用的用法是：
 ```java
-mStatusView.setBackgroundColor(Color.BLUE);
+Sofia.with(Activity)
+    ...;
 ```
 
-## 图二效果实现
-使用`FrameLayout`作为`root`，底层放需要侵入状态栏的`View`，上层放`StatusView`，然后调用`setLayoutFullScreen`把`StatusView`顶到状态栏下层，接下来就可以控制状态栏的透明度了。
-
-布局如下：
-```xml
-<FrameLayout android:id="@+id/root_layout">
-
-    <.../>
-
-    <LinearLayout>
-
-        <com.yanzhenjie.statusview.StatusView
-            <!-- 宽高随便指定 -->
-            android:background="?attr/colorPrimary"
-            app:fitsView="@id/root_layout"/>
-
-        <android.support.v7.widget.Toolbar/>
-
-    </LinearLayout>
-
-</FrameLayout>
-```
-
-接着在`Activity#onCreate()`中调用`setFullToStatusBar`：
-```
-setContentView(...);
-StatusUtils.setFullToStatusBar(this); // Layout full screen.
-```
-
-接下来随意修改状态栏的透明度：
+调用`with`方法后返回一个`Bar`接口，可以链式连续调用所有方法，方法列表如下：
 ```java
-mStatusView.getBackground().mutate().setAlpha(0~255); // 透明度值是[0, 255]。
+// 状态栏深色字体。
+Bar statusBarDarkFont();
+
+// 状态栏浅色字体。
+Bar statusBarLightFont();
+
+// 状态栏背景色。
+Bar statusBarBackground(int statusBarColor);
+
+// 状态栏背景Drawable。
+Bar statusBarBackground(Drawable drawable);
+
+// 状态栏背景透明度。
+Bar statusBarBackgroundAlpha(int alpha);
+
+// 导航栏背景色。
+Bar navigationBarBackground(int navigationBarColor);
+
+// 导航栏背景Drawable。
+Bar navigationBarBackground(Drawable drawable);
+
+// 导航栏背景透明度。
+Bar navigationBarBackgroundAlpha(int alpha);
+
+// 内容入侵状态栏。
+Bar invasionStatusBar();
+
+// 内容入侵导航栏。
+Bar invasionNavigationBar();
+
+// 让某一个View考虑状态栏的高度，显示在适当的位置，接受ViewId。
+Bar fitsSystemWindowView(int viewId);
+
+// 让某一个View考虑状态栏的高度，显示在适当的位置，接受View。
+Bar fitsSystemWindowView(View view);
 ```
 
-## 图三效果实现
-图三就比较简单了，因为它是修改状态栏的字体为深色：
-```java
-StatusUtils.setStatusBarDarkFont(this, true); // Dark font for StatusBar.
-```
+**`fitsSystemWindowView()`**一般用在产品详情页，假设需求如`图三`所示。在内容入侵状态栏后，我们的布局整体上移到状态栏，那么`Toolbar`的一部分也会显示在状态栏下方（层级），这个时候就需要`Toolbar`考虑系统状态栏的高度显示在适当的位置了。当开发者设置内容侵入导航栏时，如果页面最下方有按钮，且想让按钮显示在导航栏之上（平级），造成的效果是导航栏一部分页面，导航栏上面有按钮，这样页面就会很丑，所以不会为这种情况自动适配，如果有这样的需求，开发者在按钮布局下方添加一个`NavigationView`即可解决。
 
-因为仅仅在在6.0以后可以修改状态栏字体为深色字体，部分小米和魅族在6.0以下也支持修改状态栏字体为深色，所以这里要判断下：
-```
-if(StatusUtils.setStatusBarDarkFont(this, true)) {
-	// 成功设置深色字体后再设置状态栏为白色。
-    mStatusView.setBackgroundColor(Color.WHITE);
-} else {
-	// 如果没成功设置为深色字体，那么状态栏用灰色或者黑色（可以理解为原生色）。
-    mStatusView.setBackgroundColor(Color.BLACK);
-}
-```
-
-## 虚拟导航栏用法
-用法和`StatusView`相同，开发者只需要把它布局在Layout的最底部然后控制它的`background`属性即可，这里不再例举，请查看Sample。
+**注意**：`Sofia.with(Activity)`调用后会返回一个`Bar`接口实例，开发者可以连续调用某几个方法。在页面滑动时如果需要再次改变SystemBar的颜色，那么开发者可以保存这个`Bar`实例为`Activity`的成员变量，也可以不保存，在重复改变时再次调用`Sofia.with(Activity)`，此时还是会返回上次返回给开发者的`Bar`接口实例。
 
 # License
 ```text
