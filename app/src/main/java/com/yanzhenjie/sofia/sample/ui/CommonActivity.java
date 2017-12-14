@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yanzhenjie.statusview.sample;
+package com.yanzhenjie.sofia.sample.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -24,10 +24,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.yanzhenjie.statusview.NavigationView;
-import com.yanzhenjie.statusview.StatusUtils;
-import com.yanzhenjie.statusview.StatusView;
-import com.yanzhenjie.statusview.SystemBarHelper;
+import com.yanzhenjie.sofia.Sofia;
+import com.yanzhenjie.sofia.sample.R;
 
 /**
  * <p>
@@ -37,32 +35,24 @@ import com.yanzhenjie.statusview.SystemBarHelper;
  */
 public class CommonActivity extends AppCompatActivity {
 
-    NestedScrollView mNestedScrollView;
-    Toolbar mToolbar;
-    View mHeaderView;
-    SystemBarHelper mSystemBarHelper;
+    private Toolbar mToolbar;
+    private View mHeaderView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_common);
-        mSystemBarHelper = new SystemBarHelper.Builder()
-                .enableFullToStatusBar()
-                .enableFullToNavigationBar()
-                .statusBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                .navigationBarDrawable(ContextCompat.getDrawable(this, R.drawable.navigation))
-                .into(this);
 
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
+        NestedScrollView nestedScrollView = findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
 
         final int startColor = ContextCompat.getColor(this, R.color.colorPrimary);
-        final int endColor = ContextCompat.getColor(this, R.color.colorAccent);
+        final int endColor = ContextCompat.getColor(this, R.color.colorNavigation);
 
-        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 int headerHeight = mHeaderView.getHeight();
@@ -73,15 +63,21 @@ public class CommonActivity extends AppCompatActivity {
                 setNavigationViewColor(evaluate(fraction, endColor, startColor));
             }
         });
+
+        Sofia.with(this)
+                .statusBarBackground(ContextCompat.getColor(this, R.color.colorPrimary))
+                .navigationBarBackground(ContextCompat.getDrawable(this, R.color.colorNavigation));
     }
 
     private void setToolbarStatusBarAlpha(int color) {
         DrawableCompat.setTint(mToolbar.getBackground().mutate(), color);
-        mSystemBarHelper.setStatusBarColor(color);
+        Sofia.with(this)
+                .statusBarBackground(color);
     }
 
     private void setNavigationViewColor(int color) {
-        mSystemBarHelper.setNavigationBarColor(color);
+        Sofia.with(this)
+                .navigationBarBackground(color);
     }
 
     public int evaluate(float fraction, int startValue, int endValue) {

@@ -14,11 +14,23 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <gradient
-        android:centerColor="@color/colorAccent"
-        android:endColor="@color/colorPrimaryDark"
-        android:startColor="@color/white"/>
+    <com.yanzhenjie.sofia.StatusView
+        android:id="@+id/status_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
-</shape>
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fragment_b"
+        android:gravity="center"
+        android:textSize="@dimen/sp_20"/>
+
+</LinearLayout>

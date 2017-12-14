@@ -18,6 +18,13 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="colorNavigation">#2B2B2B</color>
 
-    <color name="white">#FFFFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#2B2B2B</color>
+
+    <color name="fragment_a">#90AB31</color>
+    <color name="fragment_a_status">#FF9000</color>
+    <color name="fragment_b">#9831AB</color>
+    <color name="fragment_b_status">#FF007E</color>
 </resources>

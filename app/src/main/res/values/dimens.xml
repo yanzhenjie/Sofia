@@ -16,6 +16,11 @@
 -->
 <resources>
 
+    <dimen name="dp_0">0dp</dimen>
+    <dimen name="dp_2">2dp</dimen>
     <dimen name="dp_10">10dp</dimen>
+    <dimen name="dp_250">250dp</dimen>
+
+    <dimen name="sp_20">20sp</dimen>
 
 </resources>

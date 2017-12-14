@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yanzhenjie.statusview.sample;
+package com.yanzhenjie.sofia.sample.ui;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -23,45 +23,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-import com.yanzhenjie.statusview.NavigationView;
-import com.yanzhenjie.statusview.StatusUtils;
-import com.yanzhenjie.statusview.StatusView;
-import com.yanzhenjie.statusview.SystemBarHelper;
+import com.yanzhenjie.sofia.Sofia;
+import com.yanzhenjie.sofia.sample.R;
 
 /**
- * <p>
  * Content intrusion status bar.
- * </p>
  * Created by YanZhenjie on 2017/8/2.
  */
 public class GoodsDetailsActivity extends AppCompatActivity {
 
-    NestedScrollView mNestedScrollView;
-    Toolbar mToolbar;
-    View mHeaderView;
-    SystemBarHelper mSystemBarHelper;
+    private Toolbar mToolbar;
+    private View mHeaderView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_goods_details);
 
-        mSystemBarHelper = new SystemBarHelper.Builder()
-                .enableFullToStatusBar()
-                .enableFullToNavigationBar()
-                .enableImmersedStatusBar(true)
-                .fitSystemWindow(R.id.toolbar)
-                .statusBarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-                .navigationBarDrawable(ContextCompat.getDrawable(this, R.drawable.navigation))
-                .into(this);
-
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
 
-        mNestedScrollView = (NestedScrollView) findViewById(R.id.nested_scroll_view);
+        NestedScrollView nestedScrollView = findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
 
-        mNestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+        nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                 int headerHeight = mHeaderView.getHeight();
@@ -70,14 +55,20 @@ public class GoodsDetailsActivity extends AppCompatActivity {
                 setAnyBarAlpha(statusAlpha);
             }
         });
+
+        Sofia.with(this)
+                .statusBarBackground(ContextCompat.getColor(this, R.color.colorPrimary))
+                .navigationBarBackground(ContextCompat.getDrawable(this, R.color.colorNavigation))
+                .invasionStatusBar()
+                .fitsSystemWindowView(mToolbar);
+
         setAnyBarAlpha(0);
     }
 
     private void setAnyBarAlpha(int alpha) {
-        mSystemBarHelper.enableImmersedNavigationBar(alpha > 0);
         mToolbar.getBackground().mutate().setAlpha(alpha);
-        mSystemBarHelper.setStatusBarAlpha(alpha);
-        mSystemBarHelper.setNavigationBarAlpha(255 - alpha);
+        Sofia.with(this)
+                .statusBarBackgroundAlpha(alpha);
     }
 
 }

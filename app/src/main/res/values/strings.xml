@@ -15,9 +15,11 @@
     limitations under the License.
 -->
 <resources>
-    <string name="app_name">StatusView</string>
+    <string name="app_name">Sofia</string>
 
     <string name="activity_title_common">渐变色状态栏</string>
     <string name="activity_title_invasion">内容侵入状态栏渐变</string>
     <string name="activity_title_dark">状态栏深色字体</string>
+    <string name="activity_title_drawer_layout">结合DrawLayout</string>
+    <string name="activity_title_fragment">结合ViewPager + Fragment</string>
 </resources>

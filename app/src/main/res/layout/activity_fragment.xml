@@ -14,29 +14,30 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_dark"/>
-
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/nested_scroll_view"
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="?actionBarSize"
+        android:layout_alignParentBottom="true"
+        android:background="?colorPrimary"
+        app:tabBackground="?selectableItemBackground"
+        app:tabGravity="fill"
+        app:tabIndicatorHeight="@dimen/dp_0"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/colorAccent"
+        app:tabTextColor="@color/white"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <android.support.v4.view.ViewPager
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/tab_layout"/>
 
-            <include layout="@layout/header"/>
-
-            <include layout="@layout/content"/>
-
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
-</LinearLayout>
+</RelativeLayout>

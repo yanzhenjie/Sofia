@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId rootProject.ext.android.applicationId
-        minSdkVersion rootProject.ext.android.sampleMinSdkVersion
+        minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
         versionCode rootProject.ext.android.versionCode
         versionName rootProject.ext.android.versionName
@@ -24,6 +24,5 @@ dependencies {
     compile rootProject.ext.dependencies.design
     compile rootProject.ext.dependencies.recyclerView
 
-//    compile rootProject.ext.dependencies.statusView
-    compile project(":statusview")
+    compile rootProject.ext.dependencies.statusView
 }

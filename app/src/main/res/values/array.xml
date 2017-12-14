@@ -20,7 +20,8 @@
         <item>普通状态栏渐变</item>
         <item>内容侵入状态栏渐变</item>
         <item>状态栏深色字体</item>
-        <item>普通状态栏</item>
+        <item>结合DrawLayout</item>
+        <item>结合ViewPager + Fragment</item>
     </string-array>
 
 </resources>

@@ -13,18 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.yanzhenjie.statusview.sample;
+package com.yanzhenjie.sofia.sample.ui;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.yanzhenjie.statusview.StatusUtils;
-import com.yanzhenjie.statusview.StatusView;
-import com.yanzhenjie.statusview.SystemBarHelper;
+import com.yanzhenjie.sofia.Sofia;
+import com.yanzhenjie.sofia.sample.R;
 
 /**
  * <p>
@@ -38,15 +36,13 @@ public class DarkFontStatusActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dark_font);
-        new SystemBarHelper.Builder()
-                .enableFullToStatusBar()
-                .enableFullToNavigationBar()
-                .enableImmersedNavigationBar(true)
-                .enableStatusBarDarkFont()
-                .statusBarColor(ContextCompat.getColor(this, R.color.white))
-                .into(this);
 
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
+
+        Sofia.with(this)
+                .statusBarDarkFont()
+                .statusBarBackground(ContextCompat.getColor(this, R.color.white))
+                .navigationBarBackground(ContextCompat.getColor(this, R.color.colorNavigation));
     }
 }
