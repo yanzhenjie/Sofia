@@ -25,9 +25,6 @@ import android.view.Window;
  */
 public class Sofia {
 
-    private Sofia() {
-    }
-
     public static Bar with(Activity activity) {
         Window window = activity.getWindow();
         ViewGroup contentLayout = window.getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
