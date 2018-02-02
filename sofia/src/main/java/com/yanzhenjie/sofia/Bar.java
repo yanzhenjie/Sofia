@@ -42,6 +42,7 @@ public interface Bar {
     Bar invasionStatusBar();
 
     Bar invasionNavigationBar();
+    Bar setStatusAndNavigationBar(int status);
 
     Bar fitsSystemWindowView(int viewId);
 

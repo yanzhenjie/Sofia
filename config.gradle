@@ -51,7 +51,7 @@ ext {
             design      : 'com.android.support:design:26.1.0',
             appCompat   : 'com.android.support:appcompat-v7:26.1.0',
             recyclerView: 'com.android.support:recyclerview-v7:26.1.0',
-
-            statusView  : 'com.yanzhenjie:sofia:1.0.4'
+            statusView  : project(':sofia')
+//            statusView  : 'com.yanzhenjie:sofia:1.0.4'
     ]
 }

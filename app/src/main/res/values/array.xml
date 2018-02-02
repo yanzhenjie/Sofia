@@ -18,10 +18,17 @@
 
     <string-array name="main_item">
         <item>普通状态栏渐变</item>
-        <item>内容侵入状态栏渐变</item>
+        <item>内容侵入状态栏toolbar渐变</item>
         <item>状态栏深色字体</item>
         <item>结合DrawLayout</item>
         <item>结合ViewPager + Fragment</item>
+        <item>内容不侵入状态栏与toolbar渐变</item>
+        <item>以下功能不建议来回切换,页面跳转过后好像也不行,容易死人的,能不用则别用吧</item>
+        <item>全屏(触摸最上边,以及最下边,会显示几秒)</item>
+        <item>退出全屏</item>
+        <item>状态栏隐藏</item>
+        <item>状态栏显示</item>
+        <item>导航栏隐藏(触摸屏幕后退出)</item>
     </string-array>
 
 </resources>
