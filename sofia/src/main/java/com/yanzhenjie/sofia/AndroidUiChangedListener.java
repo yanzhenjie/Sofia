@@ -18,7 +18,7 @@ public class AndroidUiChangedListener {
 
     /**
      * 关联要监听的视图
-     *
+     *Listenerview
      * @param viewObserving
      */
     public static void assistActivity(View viewObserving) {

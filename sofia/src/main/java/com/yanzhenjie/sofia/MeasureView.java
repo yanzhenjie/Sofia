@@ -72,7 +72,6 @@ public class MeasureView extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        //这里重测量的时候如果有任何一个是0,那么一定要让重新获取导航栏和状态栏,主要是因为先横屏,后竖屏,横屏时候初始化view不可见,也没获取到系统导航栏的高度
         if (sStatusBarHeight==0||sNavigationBarHeight==0){
             isInitialize=false;
             measureScreenSize(getContext());
