@@ -46,6 +46,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
         NestedScrollView nestedScrollView = findViewById(R.id.nested_scroll_view);
         mHeaderView = findViewById(R.id.header);
 
+        boolean flag = getIntent().getBooleanExtra("flag",true);
         nestedScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
             @Override
             public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
@@ -58,11 +59,16 @@ public class GoodsDetailsActivity extends AppCompatActivity {
 
         Sofia.with(this)
                 .statusBarBackground(ContextCompat.getColor(this, R.color.colorPrimary))
-                .navigationBarBackground(ContextCompat.getDrawable(this, R.color.colorNavigation))
-                .invasionStatusBar()
+                .navigationBarBackground(ContextCompat.getDrawable(this, R.color.colorPrimary))
                 .fitsSystemWindowView(mToolbar);
 
         setAnyBarAlpha(0);
+        //区别如果内容要侵入到状态栏需要设置invasionStatusBar,否则不需要
+        if (flag){
+            Sofia.with(this).invasionStatusBar();
+        }else{
+            setTitle("内容不侵入状态栏与toolbar渐变");
+        }
     }
 
     private void setAnyBarAlpha(int alpha) {

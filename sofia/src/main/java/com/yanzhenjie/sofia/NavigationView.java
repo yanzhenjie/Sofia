@@ -39,8 +39,10 @@ public class NavigationView extends MeasureView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), sNavigationBarHeight);
+        //当重新测量的的时候,一定要让父类先重新测量,因为sNavigationBarHeight有可能是0
+         super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), sNavigationBarHeight);
         } else {
             setMeasuredDimension(0, 0);
             setVisibility(View.GONE);

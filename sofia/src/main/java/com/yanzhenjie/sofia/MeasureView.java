@@ -32,17 +32,15 @@ import java.lang.reflect.Field;
 public class MeasureView extends View {
 
     private static boolean isInitialize = false;
-
     protected static int sStatusBarHeight = 0;
     protected static int sNavigationBarHeight = 0;
 
     private static void measureScreenSize(Context context) {
         if (isInitialize) return;
         isInitialize = true;
-
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = windowManager.getDefaultDisplay();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
+         DisplayMetrics displayMetrics = new DisplayMetrics();
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1)
             display.getRealMetrics(displayMetrics);
         else display.getMetrics(displayMetrics);
@@ -70,6 +68,15 @@ public class MeasureView extends View {
 
     public MeasureView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        if (sStatusBarHeight==0||sNavigationBarHeight==0){
+            isInitialize=false;
+            measureScreenSize(getContext());
+        }
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
     }
 
     public MeasureView(Context context, AttributeSet attrs, int defStyleAttr) {

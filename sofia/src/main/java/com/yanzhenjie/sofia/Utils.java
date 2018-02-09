@@ -29,7 +29,6 @@ import java.lang.reflect.Method;
  * Created by YanZhenjie on 2017/6/27.
  */
 public class Utils {
-
     /**
      * Set the status bar color.
      */
@@ -40,7 +39,6 @@ public class Utils {
             window.setStatusBarColor(statusBarColor);
         }
     }
-
     /**
      * Set the navigation bar color.
      */

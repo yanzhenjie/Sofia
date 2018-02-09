@@ -43,6 +43,7 @@ public class FitWindowLayout extends ViewGroup {
         setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), contentViewHeight);
     }
 
+
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
         int childCount = getChildCount();
@@ -51,7 +52,16 @@ public class FitWindowLayout extends ViewGroup {
             View view = getChildAt(i);
             int viewHeight = view.getMeasuredHeight();
             view.layout(l, allHeight, r, allHeight + viewHeight);
-            allHeight += viewHeight;
+            if (getChildAt(i) instanceof StatusView){
+                HostLayout parent = (HostLayout) getParent().getParent().getParent();
+                //主要是解决如果未调用沉浸,导致需要固定的view固定到了状态栏附近
+                if ((parent.getmInvasionFlag()&HostLayout.FLAG_INVASION_STATUS)==HostLayout.FLAG_INVASION_STATUS){
+                    allHeight += viewHeight;
+                }
+               //下边的正常的基本操作
+            }else {
+                allHeight += viewHeight;
+            }
         }
     }
 }
