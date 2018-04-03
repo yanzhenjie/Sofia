@@ -156,7 +156,6 @@ class HostLayout extends RelativeLayout implements Bar {
             fitGroup.removeView(fitView);
 
             ViewGroup.LayoutParams fitLayoutParams = fitView.getLayoutParams();
-            fitLayoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
             FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
             fitGroup.addView(fitLayout, fitLayoutParams);
 
