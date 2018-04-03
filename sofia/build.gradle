@@ -7,14 +7,9 @@ android {
     defaultConfig {
         minSdkVersion rootProject.ext.android.minSdkVersion
         targetSdkVersion rootProject.ext.android.targetSdkVersion
-
-        compileOptions {
-            sourceCompatibility JavaVersion.VERSION_1_7
-            targetCompatibility JavaVersion.VERSION_1_7
-        }
     }
 
     resourcePrefix 'sofia'
 }
 
-apply from: 'https://github.com/yanzhenjie/bintray/blob/master/maven.gradle?raw=true'
+apply from: 'https://raw.githubusercontent.com/yanzhenjie/bintray/master/maven.gradle'

@@ -8,11 +8,11 @@ ext {
 
     android = [
             applicationId    : "com.yanzhenjie.sofia.sample",
-            compileSdkVersion: 26,
-            buildToolsVersion: "26.0.3",
+            compileSdkVersion: 27,
+            buildToolsVersion: "27.0.3",
 
             minSdkVersion    : 14,
-            targetSdkVersion : 25,
+            targetSdkVersion : 27,
 
             versionCode      : 4,
             versionName      : "1.0.4",
@@ -48,9 +48,9 @@ ext {
     ]
 
     dependencies = [
-            design      : 'com.android.support:design:26.1.0',
-            appCompat   : 'com.android.support:appcompat-v7:26.1.0',
-            recyclerView: 'com.android.support:recyclerview-v7:26.1.0',
+            design      : 'com.android.support:design:27.1.0',
+            appCompat   : 'com.android.support:appcompat-v7:27.1.0',
+            recyclerView: 'com.android.support:recyclerview-v7:27.1.0',
 
             statusView  : 'com.yanzhenjie:sofia:1.0.4'
     ]
