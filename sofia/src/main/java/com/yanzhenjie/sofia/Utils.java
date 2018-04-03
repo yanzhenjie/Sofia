@@ -83,13 +83,19 @@ public class Utils {
     /**
      * Set the status bar to dark.
      */
-    public static void setStatusBarDarkFont(Activity activity, boolean darkFont) {
-        setMIUIStatusBarFont(activity, darkFont);
-        setMeizuStatusBarFont(activity, darkFont);
-        setDefaultStatusBarFont(activity, darkFont);
+    public static boolean setStatusBarDarkFont(Activity activity, boolean darkFont) {
+        if (setMIUIStatusBarFont(activity, darkFont)) {
+            setDefaultStatusBarFont(activity, darkFont);
+            return true;
+        } else if (setMeizuStatusBarFont(activity, darkFont)) {
+            setDefaultStatusBarFont(activity, darkFont);
+            return true;
+        } else {
+            return setDefaultStatusBarFont(activity, darkFont);
+        }
     }
 
-    private static void setMeizuStatusBarFont(Activity activity, boolean darkFont) {
+    private static boolean setMeizuStatusBarFont(Activity activity, boolean darkFont) {
         try {
             WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
             Field darkFlag = WindowManager.LayoutParams.class.getDeclaredField("MEIZU_FLAG_DARK_STATUS_BAR_ICON");
@@ -105,11 +111,13 @@ public class Utils {
             }
             meizuFlags.setInt(lp, value);
             activity.getWindow().setAttributes(lp);
+            return true;
         } catch (Exception ignored) {
         }
+        return false;
     }
 
-    private static void setMIUIStatusBarFont(Activity activity, boolean dark) {
+    private static boolean setMIUIStatusBarFont(Activity activity, boolean dark) {
         Window window = activity.getWindow();
         Class<?> clazz = window.getClass();
         try {
@@ -122,11 +130,13 @@ public class Utils {
             } else {
                 extraFlagField.invoke(window, 0, darkModeFlag);
             }
+            return true;
         } catch (Exception ignored) {
         }
+        return false;
     }
 
-    private static void setDefaultStatusBarFont(Activity activity, boolean dark) {
+    private static boolean setDefaultStatusBarFont(Activity activity, boolean dark) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Window window = activity.getWindow();
             View decorView = window.getDecorView();
@@ -135,7 +145,9 @@ public class Utils {
             } else {
                 decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
             }
+            return true;
         }
+        return false;
     }
 
 }
