@@ -147,24 +147,82 @@ class HostLayout extends RelativeLayout implements Bar {
         return this;
     }
 
+    /**
+     * @deprecated use {@link #fitsStatusBarView(int)} instead.
+     */
+    @Deprecated
     @Override
     public Bar fitsSystemWindowView(int viewId) {
-        return fitsSystemWindowView(findViewById(viewId));
+        return fitsStatusBarView(findViewById(viewId));
+    }
+
+    /**
+     * @deprecated use {@link #fitsStatusBarView(View)} instead.
+     */
+    @Deprecated
+    @Override
+    public Bar fitsSystemWindowView(View view) {
+        return fitsStatusBarView(view);
     }
 
     @Override
-    public Bar fitsSystemWindowView(View fitView) {
-        ViewParent fitParent = fitView.getParent();
+    public Bar fitsStatusBarView(int viewId) {
+        return fitsStatusBarView(findViewById(viewId));
+    }
+
+    @Override
+    public Bar fitsStatusBarView(View view) {
+        ViewParent fitParent = view.getParent();
         if (fitParent != null && !(fitParent instanceof FitWindowLayout)) {
-            ViewGroup fitGroup = (ViewGroup) fitParent;
-            fitGroup.removeView(fitView);
-
-            ViewGroup.LayoutParams fitLayoutParams = fitView.getLayoutParams();
             FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
-            fitGroup.addView(fitLayout, fitLayoutParams);
+            StatusView statusView = new StatusView(mActivity);
+            fitLayout.addView(statusView);
 
+            ViewGroup fitGroup = (ViewGroup) fitParent;
+            fitGroup.removeView(view);
+
+            ViewGroup.LayoutParams fitLayoutParams = view.getLayoutParams();
             ViewGroup.LayoutParams fitViewParams = new ViewGroup.LayoutParams(fitLayoutParams.width, fitLayoutParams.height);
-            fitLayout.addView(fitView, fitViewParams);
+            fitLayout.addView(view, fitViewParams);
+
+            fitLayoutParams.height = -2;
+            fitGroup.addView(fitLayout, fitLayoutParams);
+        }
+        return this;
+    }
+
+    @Override
+    public Bar fitsNavigationBarView(int viewId) {
+        return fitsNavigationBarView(findViewById(viewId));
+    }
+
+    @Override
+    public Bar fitsNavigationBarView(View view) {
+        ViewParent fitParent = view.getParent();
+        if (fitParent != null && !(fitParent instanceof FitWindowLayout)) {
+            FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
+
+            ViewGroup fitGroup = (ViewGroup) fitParent;
+            fitGroup.removeView(view);
+
+            ViewGroup.LayoutParams fitLayoutParams = view.getLayoutParams();
+            ViewGroup.LayoutParams fitViewParams = new ViewGroup.LayoutParams(fitLayoutParams.width, fitLayoutParams.height);
+            fitLayout.addView(view, fitViewParams);
+
+            NavigationView navigationView = new NavigationView(mActivity) {
+                @Override
+                protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+                    if (this.isLandscape()) {
+                        this.setMeasuredDimension(0, 0);
+                    } else {
+                        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+                    }
+                }
+            };
+            fitLayout.addView(navigationView);
+
+            fitLayoutParams.height = -2;
+            fitGroup.addView(fitLayout, fitLayoutParams);
         }
         return this;
     }

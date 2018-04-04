@@ -26,7 +26,6 @@ public class FitWindowLayout extends ViewGroup {
 
     public FitWindowLayout(Context context) {
         super(context);
-        addView(new StatusView(context));
     }
 
     @Override

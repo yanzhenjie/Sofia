@@ -54,20 +54,14 @@ public class NavigationView extends View {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            switch (mConfiguration.orientation) {
-                case Configuration.ORIENTATION_UNDEFINED:
-                case Configuration.ORIENTATION_PORTRAIT: {
-                    mDisplay.getRealMetrics(mDisplayMetrics);
-                    mBarSize = mDisplayMetrics.heightPixels - getDisplayHeight(mDisplay);
-                    setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mBarSize);
-                    break;
-                }
-                case Configuration.ORIENTATION_LANDSCAPE: {
-                    mDisplay.getRealMetrics(mDisplayMetrics);
-                    mBarSize = mDisplayMetrics.widthPixels - getDisplayWidth(mDisplay);
-                    setMeasuredDimension(mBarSize, MeasureSpec.getSize(heightMeasureSpec));
-                    break;
-                }
+            if (isLandscape()) {
+                mDisplay.getRealMetrics(mDisplayMetrics);
+                mBarSize = mDisplayMetrics.widthPixels - getDisplayWidth(mDisplay);
+                setMeasuredDimension(mBarSize, MeasureSpec.getSize(heightMeasureSpec));
+            } else {
+                mDisplay.getRealMetrics(mDisplayMetrics);
+                mBarSize = mDisplayMetrics.heightPixels - getDisplayHeight(mDisplay);
+                setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mBarSize);
             }
         } else {
             setMeasuredDimension(0, 0);
@@ -91,5 +85,21 @@ public class NavigationView extends View {
      */
     public int getBarSize() {
         return mBarSize;
+    }
+
+    /**
+     * Whether landscape screen.
+     */
+    protected boolean isLandscape() {
+        switch (mConfiguration.orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE: {
+                return false;
+            }
+            case Configuration.ORIENTATION_UNDEFINED:
+            case Configuration.ORIENTATION_PORTRAIT:
+            default: {
+                return false;
+            }
+        }
     }
 }

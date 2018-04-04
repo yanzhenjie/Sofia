@@ -43,7 +43,23 @@ public interface Bar {
 
     Bar invasionNavigationBar();
 
+    /**
+     * @deprecated use {@link #fitsStatusBarView(int)} instead.
+     */
+    @Deprecated
     Bar fitsSystemWindowView(int viewId);
 
+    /**
+     * @deprecated use {@link #fitsStatusBarView(View)} instead.
+     */
+    @Deprecated
     Bar fitsSystemWindowView(View view);
+
+    Bar fitsStatusBarView(int viewId);
+
+    Bar fitsStatusBarView(View view);
+
+    Bar fitsNavigationBarView(int viewId);
+
+    Bar fitsNavigationBarView(View view);
 }
