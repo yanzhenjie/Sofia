@@ -88,16 +88,18 @@ class HostLayout extends RelativeLayout implements Bar {
     }
 
     @Override
-    public Bar statusBarBackground(int statusBarColor) {
-        mStatusView.setBackgroundColor(statusBarColor);
+    public Bar statusBarBackground(int color) {
+        mStatusView.setBackgroundColor(color);
         return this;
     }
 
     @Override
     public Bar statusBarBackground(Drawable drawable) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mStatusView.setBackground(drawable);
-        else mStatusView.setBackgroundDrawable(drawable);
+        } else {
+            mStatusView.setBackgroundDrawable(drawable);
+        }
         return this;
     }
 
@@ -109,16 +111,18 @@ class HostLayout extends RelativeLayout implements Bar {
     }
 
     @Override
-    public Bar navigationBarBackground(int navigationBarColor) {
-        mNavigationView.setBackgroundColor(navigationBarColor);
+    public Bar navigationBarBackground(int color) {
+        mNavigationView.setBackgroundColor(color);
         return this;
     }
 
     @Override
     public Bar navigationBarBackground(Drawable drawable) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
             mNavigationView.setBackground(drawable);
-        else mNavigationView.setBackgroundDrawable(drawable);
+        } else {
+            mNavigationView.setBackgroundDrawable(drawable);
+        }
         return this;
     }
 
