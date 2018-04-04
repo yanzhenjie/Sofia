@@ -51,7 +51,7 @@ class HostLayout extends RelativeLayout implements Bar {
         loadView();
         replaceContentView();
 
-        Utils.invasionNavigationBar(mActivity);
+        Utils.invasionStatusBar(mActivity);
         Utils.invasionNavigationBar(mActivity);
         Utils.setStatusBarColor(mActivity, Color.TRANSPARENT);
         Utils.setNavigationBarColor(mActivity, Color.TRANSPARENT);

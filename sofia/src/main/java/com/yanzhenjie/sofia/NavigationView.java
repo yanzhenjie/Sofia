@@ -15,14 +15,10 @@
  */
 package com.yanzhenjie.sofia;
 
-import android.content.ContentResolver;
 import android.content.Context;
-import android.database.ContentObserver;
+import android.content.res.Configuration;
 import android.graphics.Point;
-import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
-import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.Display;
@@ -34,11 +30,10 @@ import android.view.WindowManager;
  */
 public class NavigationView extends View {
 
-    private static final String MINI_CONSTANT = "navigationbar_is_min";
-
-    private ContentResolver mResolver;
-    private WindowManager mWindowManager;
-    private int mNavigationBarSize;
+    private Display mDisplay;
+    private DisplayMetrics mDisplayMetrics;
+    private Configuration mConfiguration;
+    private int mBarSize;
 
     public NavigationView(Context context) {
         this(context, null, 0);
@@ -50,59 +45,51 @@ public class NavigationView extends View {
 
     public NavigationView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        mResolver = getContext().getContentResolver();
-        mWindowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-
-        registerListener();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        mDisplay = windowManager.getDefaultDisplay();
+        mDisplayMetrics = new DisplayMetrics();
+        mConfiguration = getResources().getConfiguration();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            measureNavigation();
-            setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mNavigationBarSize);
+            switch (mConfiguration.orientation) {
+                case Configuration.ORIENTATION_UNDEFINED:
+                case Configuration.ORIENTATION_PORTRAIT: {
+                    mDisplay.getRealMetrics(mDisplayMetrics);
+                    mBarSize = mDisplayMetrics.heightPixels - getDisplayHeight(mDisplay);
+                    setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mBarSize);
+                    break;
+                }
+                case Configuration.ORIENTATION_LANDSCAPE: {
+                    mDisplay.getRealMetrics(mDisplayMetrics);
+                    mBarSize = mDisplayMetrics.widthPixels - getDisplayWidth(mDisplay);
+                    setMeasuredDimension(mBarSize, MeasureSpec.getSize(heightMeasureSpec));
+                    break;
+                }
+            }
         } else {
             setMeasuredDimension(0, 0);
         }
     }
 
-    /**
-     * Get navigation bar height.
-     */
-    public int getNavigationBarSize() {
-        return mNavigationBarSize;
-    }
-
-    /**
-     * Listen to the navigation bar.
-     */
-    private void registerListener() {
-        Uri uri = Settings.System.getUriFor(MINI_CONSTANT);
-        mResolver.registerContentObserver(uri, true, new ContentObserver(new Handler()) {
-            @Override
-            public void onChange(boolean selfChange) {
-                requestLayout();
-            }
-        });
-    }
-
-    /**
-     * Measure the size of the navigation bar.
-     */
-    private void measureNavigation() {
-        Display display = mWindowManager.getDefaultDisplay();
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            display.getRealMetrics(displayMetrics);
-        } else {
-            display.getMetrics(displayMetrics);
-        }
-        mNavigationBarSize = displayMetrics.heightPixels - getDisplayHeight(display);
+    private static int getDisplayWidth(Display display) {
+        Point point = new Point();
+        display.getSize(point);
+        return point.x;
     }
 
     private static int getDisplayHeight(Display display) {
         Point point = new Point();
         display.getSize(point);
         return point.y;
+    }
+
+    /**
+     * Get navigation bar height.
+     */
+    public int getBarSize() {
+        return mBarSize;
     }
 }
