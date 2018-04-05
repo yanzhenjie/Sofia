@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
+import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -57,6 +58,25 @@ class HostLayout extends RelativeLayout implements Bar {
         Utils.setNavigationBarColor(mActivity, Color.TRANSPARENT);
     }
 
+    @Override
+    public final WindowInsets onApplyWindowInsets(WindowInsets insets) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            int paddingSize = insets.getSystemWindowInsetBottom();
+            int barSize = mNavigationView.getDefaultBarSize();
+            paddingSize = paddingSize == barSize ? 0 : paddingSize;
+            mContentLayout.setPaddingRelative(0, 0, 0, paddingSize);
+            RelativeLayout.LayoutParams layoutParams = (LayoutParams) mContentLayout.getLayoutParams();
+            if (paddingSize > 0 && !mNavigationView.isLandscape()) {
+                layoutParams.bottomMargin = -barSize;
+            } else {
+                layoutParams.bottomMargin = 0;
+            }
+            return super.onApplyWindowInsets(insets.replaceSystemWindowInsets(0, 0, 0, 0));
+        } else {
+            return insets;
+        }
+    }
+
     private void loadView() {
         inflate(mActivity, R.layout.sofia_host_layout, this);
         mStatusView = findViewById(R.id.status_view);
@@ -70,9 +90,10 @@ class HostLayout extends RelativeLayout implements Bar {
         if (contentLayout.getChildCount() > 0) {
             View contentView = contentLayout.getChildAt(0);
             contentLayout.removeView(contentView);
-            mContentLayout.addView(contentView);
+            ViewGroup.LayoutParams contentParams = contentView.getLayoutParams();
+            mContentLayout.addView(contentView, contentParams.width, contentParams.height);
         }
-        contentLayout.addView(this);
+        contentLayout.addView(this, -1, -1);
     }
 
     @Override

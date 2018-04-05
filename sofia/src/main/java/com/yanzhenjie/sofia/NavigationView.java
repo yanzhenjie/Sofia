@@ -17,6 +17,7 @@ package com.yanzhenjie.sofia;
 
 import android.content.Context;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Point;
 import android.os.Build;
 import android.util.AttributeSet;
@@ -33,6 +34,7 @@ public class NavigationView extends View {
     private Display mDisplay;
     private DisplayMetrics mDisplayMetrics;
     private Configuration mConfiguration;
+    private int mDefaultBarSize;
     private int mBarSize;
 
     public NavigationView(Context context) {
@@ -48,7 +50,11 @@ public class NavigationView extends View {
         WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         mDisplay = windowManager.getDefaultDisplay();
         mDisplayMetrics = new DisplayMetrics();
-        mConfiguration = getResources().getConfiguration();
+        Resources resources = getResources();
+        mConfiguration = resources.getConfiguration();
+
+        int resourceId = resources.getIdentifier("navigation_bar_height", "dimen", "android");
+        mDefaultBarSize = resources.getDimensionPixelSize(resourceId);
     }
 
     @Override
@@ -81,7 +87,14 @@ public class NavigationView extends View {
     }
 
     /**
-     * Get navigation bar height.
+     * Get the default height of navigation bar.
+     */
+    public int getDefaultBarSize() {
+        return mDefaultBarSize;
+    }
+
+    /**
+     * Get the height of navigation bar.
      */
     public int getBarSize() {
         return mBarSize;
@@ -93,7 +106,7 @@ public class NavigationView extends View {
     protected boolean isLandscape() {
         switch (mConfiguration.orientation) {
             case Configuration.ORIENTATION_LANDSCAPE: {
-                return false;
+                return true;
             }
             case Configuration.ORIENTATION_UNDEFINED:
             case Configuration.ORIENTATION_PORTRAIT:
