@@ -14,10 +14,8 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation rootProject.ext.dependencies.appCompat
     implementation rootProject.ext.dependencies.design
     implementation rootProject.ext.dependencies.recyclerView
-
-    implementation rootProject.ext.dependencies.statusView
+    implementation rootProject.ext.dependencies.sofia
 }

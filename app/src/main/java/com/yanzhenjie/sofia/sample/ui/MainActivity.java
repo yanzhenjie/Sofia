@@ -82,8 +82,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         Sofia.with(this)
-                .statusBarBackground(ContextCompat.getDrawable(this, R.mipmap.status_image))
-                .navigationBarBackground(ContextCompat.getDrawable(this, R.mipmap.navigation_image_a));
+                .statusBarBackground(ContextCompat.getDrawable(this, R.drawable.status_image))
+                .navigationBarBackground(ContextCompat.getDrawable(this, R.drawable.navigation_image_a));
     }
 
     private static class Adapter extends RecyclerView.Adapter<ViewHolder> {

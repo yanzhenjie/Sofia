@@ -60,7 +60,7 @@ public class GoodsDetailsActivity extends AppCompatActivity {
                 .statusBarBackground(ContextCompat.getColor(this, R.color.colorPrimary))
                 .navigationBarBackground(ContextCompat.getDrawable(this, R.color.colorNavigation))
                 .invasionStatusBar()
-                .fitsSystemWindowView(mToolbar);
+                .fitsStatusBarView(mToolbar);
 
         setAnyBarAlpha(0);
     }

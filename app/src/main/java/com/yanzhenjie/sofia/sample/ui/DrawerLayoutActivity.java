@@ -15,6 +15,7 @@
  */
 package com.yanzhenjie.sofia.sample.ui;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -69,10 +70,11 @@ public class DrawerLayoutActivity extends AppCompatActivity {
             }
         });
 
-        // 这里不实用Sofia设置StatusBar颜色，用自己在布局中的，用Sofia设置会覆盖在DrawerLayout之上。
+        // 这里不使用Sofia设置StatusBar颜色，用自己在布局中的，用Sofia设置会覆盖在DrawerLayout之上。
         Sofia.with(this)
                 .navigationBarBackground(ContextCompat.getDrawable(this, R.color.colorNavigation))
-                .invasionStatusBar();
+                .invasionStatusBar()
+                .statusBarBackground(Color.TRANSPARENT);
         setAnyBarAlpha(0);
     }
 

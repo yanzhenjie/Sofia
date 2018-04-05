@@ -15,6 +15,7 @@
  */
 package com.yanzhenjie.sofia.sample.ui.fragment;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -55,7 +56,8 @@ public class FragmentActivity extends AppCompatActivity {
         // 不实用Sofia设置Status颜色，因为不会随着Fragment的改变而变化，在Fragment中自行设置。
         Sofia.with(this)
                 .invasionStatusBar()
-                .navigationBarBackground(ContextCompat.getDrawable(this, R.mipmap.navigation_image_b));
+                .statusBarBackground(Color.TRANSPARENT)
+                .navigationBarBackground(ContextCompat.getDrawable(this, R.drawable.navigation_image_b));
     }
 
     private static class Adapter extends FragmentPagerAdapter {
