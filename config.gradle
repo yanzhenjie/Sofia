@@ -14,12 +14,12 @@ ext {
             minSdkVersion    : 14,
             targetSdkVersion : 27,
 
-            versionCode      : 4,
-            versionName      : "1.0.4",
+            versionCode      : 5,
+            versionName      : "1.0.5",
     ]
 
     bintray = [
-            version       : "1.0.4",
+            version       : "1.0.5",
 
             siteUrl       : 'https://github.com/yanzhenjie/Sofia',
             gitUrl        : 'git@github.com:yanzhenjie/Sofia.git',
@@ -52,6 +52,6 @@ ext {
             appCompat   : 'com.android.support:appcompat-v7:27.1.0',
             recyclerView: 'com.android.support:recyclerview-v7:27.1.0',
 
-            statusView  : 'com.yanzhenjie:sofia:1.0.4'
+            sofia       : 'com.yanzhenjie:sofia:1.0.5'
     ]
 }
