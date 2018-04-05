@@ -16,6 +16,7 @@
 package com.yanzhenjie.sofia;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -26,7 +27,6 @@ import android.view.Window;
 import android.view.WindowInsets;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
-
 
 /**
  * Created by YanZhenjie on 2017/8/30.
@@ -157,14 +157,14 @@ class HostLayout extends RelativeLayout implements Bar {
     @Override
     public Bar invasionStatusBar() {
         mInvasionFlag |= FLAG_INVASION_STATUS;
-        reLayoutInvasion();
+        layoutInvasion();
         return this;
     }
 
     @Override
     public Bar invasionNavigationBar() {
         mInvasionFlag |= FLAG_INVASION_NAVIGATION;
-        reLayoutInvasion();
+        layoutInvasion();
         return this;
     }
 
@@ -196,18 +196,15 @@ class HostLayout extends RelativeLayout implements Bar {
         ViewParent fitParent = view.getParent();
         if (fitParent != null && !(fitParent instanceof FitWindowLayout)) {
             FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
+            ViewGroup fitGroup = (ViewGroup) fitParent;
+            fitGroup.removeView(view);
+            fitGroup.addView(fitLayout);
+
             StatusView statusView = new StatusView(mActivity);
             fitLayout.addView(statusView);
 
-            ViewGroup fitGroup = (ViewGroup) fitParent;
-            fitGroup.removeView(view);
-
-            ViewGroup.LayoutParams fitLayoutParams = view.getLayoutParams();
-            ViewGroup.LayoutParams fitViewParams = new ViewGroup.LayoutParams(fitLayoutParams.width, fitLayoutParams.height);
-            fitLayout.addView(view, fitViewParams);
-
-            fitLayoutParams.height = -2;
-            fitGroup.addView(fitLayout, fitLayoutParams);
+            ViewGroup.LayoutParams fitViewParams = view.getLayoutParams();
+            fitLayout.addView(view, fitViewParams.width, fitViewParams.height);
         }
         return this;
     }
@@ -222,18 +219,17 @@ class HostLayout extends RelativeLayout implements Bar {
         ViewParent fitParent = view.getParent();
         if (fitParent != null && !(fitParent instanceof FitWindowLayout)) {
             FitWindowLayout fitLayout = new FitWindowLayout(mActivity);
-
             ViewGroup fitGroup = (ViewGroup) fitParent;
             fitGroup.removeView(view);
+            fitGroup.addView(fitLayout);
 
-            ViewGroup.LayoutParams fitLayoutParams = view.getLayoutParams();
-            ViewGroup.LayoutParams fitViewParams = new ViewGroup.LayoutParams(fitLayoutParams.width, fitLayoutParams.height);
-            fitLayout.addView(view, fitViewParams);
+            ViewGroup.LayoutParams fitViewParams = view.getLayoutParams();
+            fitLayout.addView(view, fitViewParams.width, fitViewParams.height);
 
             NavigationView navigationView = new NavigationView(mActivity) {
                 @Override
                 protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-                    if (this.isLandscape()) {
+                    if (isLandscape()) {
                         this.setMeasuredDimension(0, 0);
                     } else {
                         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
@@ -241,32 +237,71 @@ class HostLayout extends RelativeLayout implements Bar {
                 }
             };
             fitLayout.addView(navigationView);
-
-            fitLayoutParams.height = -2;
-            fitGroup.addView(fitLayout, fitLayoutParams);
         }
         return this;
     }
 
-    private void reLayoutInvasion() {
-        LayoutParams layoutParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        switch (mInvasionFlag) {
-            case FLAG_INVASION_STATUS:
-                layoutParams.addRule(RelativeLayout.ABOVE, R.id.navigation_view);
-                bringChildToFront(mStatusView);
-                break;
-            case FLAG_INVASION_NAVIGATION:
-                layoutParams.addRule(RelativeLayout.BELOW, R.id.status_view);
-                bringChildToFront(mNavigationView);
-                break;
-            case FLAG_INVASION_STATUS_AND_NAVIGATION:
-                bringChildToFront(mStatusView);
-                bringChildToFront(mNavigationView);
-                break;
-            case FLAG_NOT_INVASION:
-                layoutParams.addRule(RelativeLayout.BELOW, R.id.status_view);
-                layoutParams.addRule(RelativeLayout.ABOVE, R.id.navigation_view);
-                break;
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        if (mNavigationView.isLandscape()) {
+            LayoutParams navigationParams = (LayoutParams) mNavigationView.getLayoutParams();
+            navigationParams.addRule(ALIGN_PARENT_RIGHT);
+
+            LayoutParams statusParams = (LayoutParams) mStatusView.getLayoutParams();
+            statusParams.addRule(ALIGN_PARENT_TOP);
+            statusParams.addRule(LEFT_OF, R.id.navigation_view);
+        } else {
+            LayoutParams statusParams = (LayoutParams) mStatusView.getLayoutParams();
+            statusParams.addRule(ALIGN_PARENT_TOP);
+
+            LayoutParams navigationParams = (LayoutParams) mNavigationView.getLayoutParams();
+            navigationParams.addRule(ALIGN_PARENT_BOTTOM);
+        }
+        layoutInvasion();
+    }
+
+    private void layoutInvasion() {
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
+        if (mNavigationView.isLandscape()) {
+            switch (mInvasionFlag) {
+                case FLAG_INVASION_STATUS:
+                    layoutParams.addRule(LEFT_OF, R.id.navigation_view);
+                    bringChildToFront(mStatusView);
+                    break;
+                case FLAG_INVASION_NAVIGATION:
+                    layoutParams.addRule(BELOW, R.id.status_view);
+                    layoutParams.addRule(LEFT_OF, R.id.navigation_view);
+                    bringChildToFront(mNavigationView);
+                    break;
+                case FLAG_INVASION_STATUS_AND_NAVIGATION:
+                    layoutParams.addRule(LEFT_OF, R.id.navigation_view);
+                    bringChildToFront(mStatusView);
+                    bringChildToFront(mNavigationView);
+                    break;
+                case FLAG_NOT_INVASION:
+                    layoutParams.addRule(BELOW, R.id.status_view);
+                    layoutParams.addRule(LEFT_OF, R.id.navigation_view);
+                    break;
+            }
+        } else {
+            switch (mInvasionFlag) {
+                case FLAG_INVASION_STATUS:
+                    layoutParams.addRule(RelativeLayout.ABOVE, R.id.navigation_view);
+                    bringChildToFront(mStatusView);
+                    break;
+                case FLAG_INVASION_NAVIGATION:
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.status_view);
+                    bringChildToFront(mNavigationView);
+                    break;
+                case FLAG_INVASION_STATUS_AND_NAVIGATION:
+                    bringChildToFront(mStatusView);
+                    bringChildToFront(mNavigationView);
+                    break;
+                case FLAG_NOT_INVASION:
+                    layoutParams.addRule(RelativeLayout.BELOW, R.id.status_view);
+                    layoutParams.addRule(RelativeLayout.ABOVE, R.id.navigation_view);
+                    break;
+            }
         }
         mContentLayout.setLayoutParams(layoutParams);
     }
