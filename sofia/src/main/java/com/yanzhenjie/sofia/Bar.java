@@ -27,6 +27,10 @@ public interface Bar {
 
     Bar statusBarLightFont();
 
+    Bar navigationBarLightFont();
+
+    Bar navigationBarDarkFont();
+
     Bar statusBarBackground(int statusBarColor);
 
     Bar statusBarBackground(Drawable drawable);

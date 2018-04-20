@@ -109,6 +109,18 @@ class HostLayout extends RelativeLayout implements Bar {
     }
 
     @Override
+    public Bar navigationBarLightFont() {
+        Utils.setNavigationBarLightFont(mActivity, false);
+        return this;
+    }
+
+    @Override
+    public Bar navigationBarDarkFont() {
+        Utils.setNavigationBarLightFont(mActivity, true);
+        return this;
+    }
+
+    @Override
     public Bar statusBarBackground(int color) {
         mStatusView.setBackgroundColor(color);
         return this;
