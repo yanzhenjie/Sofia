@@ -150,4 +150,15 @@ public class Utils {
         return false;
     }
 
+    public static void setNavigationBarLightFont(Activity activity, boolean dark) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            Window window = activity.getWindow();
+            View decorView = window.getDecorView();
+            if (dark) {
+                decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() | View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            } else {
+                decorView.setSystemUiVisibility(decorView.getSystemUiVisibility() & ~View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR);
+            }
+        }
+    }
 }
